@@ -1,8 +1,12 @@
 from math import sqrt, isclose
 
-PERCISION = 2
+PERCISION = 0.05
 SQUARE = 2
 FULL_JAW = 2
+
+# Internal Printer  
+def __print_shape(shape):
+    print("Face Shape: " + shape)
 
 def face_shape(data):
 
@@ -21,7 +25,7 @@ def face_shape(data):
     # x2 for full face
     jaw_length = jaw_length * FULL_JAW
 
-    # Show user some sizing -> handwave
+    # Show user some sizing -> handwaving
     print("Relative shape sizing:")
     print("Cheekbone Width: " + str(cheekbone_width))
     print("Forehead Width: " + str(forehead_width))
@@ -29,34 +33,35 @@ def face_shape(data):
     print("Jawline Length: " + str(jaw_length))
 
     # TODO Fix this condition ELIF Nightmare
-    # Face Length > Cheekbone Width > Forehead Width > Jawline == diamond
-    if((face_length > cheekbone_width) and (cheekbone_width > forehead_width) and (forehead_width > jaw_length)):
-        print("Diamond")
-
+    # TODO Revist shape logic - is it right?
     # Forehead Width > Cheekbone Width > Jawline [Pointed Chin] == heart
-    elif((forehead_width > cheekbone_width) and (cheekbone_width > jaw_length)):
-        print("heart")
+    if((forehead_width > cheekbone_width) and (cheekbone_width > jaw_length)):
+        __print_shape("Heart")
 
     # Face Length > (Cheekbone Width ≈ Forehead Width ≈ Jawline) == oblong
-    elif((face_length > jaw_length) and (isclose(cheekbone_width, forehead_width, abs_tol=10**-PERCISION)) and (isclose(jaw_length, forehead_width, abs_tol=10**-PERCISION))):
-        print("oblong")
+    elif((face_length > jaw_length) and (isclose(cheekbone_width, forehead_width, abs_tol=PERCISION)) and (isclose(jaw_length, forehead_width, abs_tol=PERCISION))):
+        __print_shape("Oblong")
+
+     # Face Length > Cheekbone Width > Forehead Width > Jawline == diamond
+    elif((face_length > cheekbone_width) and (cheekbone_width > forehead_width) and (forehead_width > jaw_length)):
+        __print_shape("Diamond")
 
     # Face Length > Cheekbone Width & Forehead Width > Jawline == oval
-    elif((face_length > cheekbone_width) and (isclose(cheekbone_width, forehead_width, abs_tol=10**-PERCISION)) and (cheekbone_width > jaw_length)):
-        print("oval")
+    elif((face_length > cheekbone_width) and (isclose(cheekbone_width, forehead_width, abs_tol=PERCISION)) and (cheekbone_width > jaw_length)):
+        __print_shape("Oval")
 
     # (Face Length ≈ Cheekbone Width) > (Forehead Width ≈ Jawline) [Rounded Jaw] == round
-    elif((isclose(face_length, cheekbone_width, abs_tol=10**-PERCISION)) and (cheekbone_width > forehead_width) and (isclose(forehead_width, jaw_length, abs_tol=10**-PERCISION))):
-        print("round")
+    elif((isclose(face_length, cheekbone_width, abs_tol=PERCISION)) and (cheekbone_width > forehead_width) and (isclose(forehead_width, jaw_length, abs_tol=PERCISION))):
+        __print_shape("Round")
 
     # Face Length ≈ Cheekbone Width ≈ Forehead Witch ≈ Jawline [Hard Jawed] == square
-    elif((isclose(cheekbone_width, face_length, abs_tol=10**-PERCISION)) and (isclose(cheekbone_width, forehead_width, abs_tol=10**-PERCISION)) and (isclose(jaw_length, forehead_width, abs_tol=10**-PERCISION))):
-        print("square")
+    elif((isclose(cheekbone_width, face_length, abs_tol=PERCISION)) and (isclose(cheekbone_width, forehead_width, abs_tol=PERCISION)) and (isclose(jaw_length, forehead_width, abs_tol=PERCISION))):
+        __print_shape("Square")
 
     # Jawline > Cheekbone Width > Forehead Width == triage
     elif((jaw_length > cheekbone_width) and  (cheekbone_width > forehead_width)):
-        print("Triangle")
+        __print_shape("Triangle")
  
     # Base case - All else fails?
     else:
-        print("Not sure! Try staying centre frame!")
+        __print_shape("Not sure! Try staying centre frame!")
