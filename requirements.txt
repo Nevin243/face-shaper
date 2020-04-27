@@ -1,0 +1,3 @@
+boto3==1.9.227
+botocore==1.12.214
+opencv-python==4.2.0.34
